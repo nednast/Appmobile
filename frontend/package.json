@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+
+    "node": "rsync -av --delete ./node_modules/@capacitor/ /mnt/c/Users/na404753/appmobile-tp/node_modules/@capacitor/",
+    "android": "nuxt build && npx cap sync android && rsync -av --delete ./android/ /mnt/c/Users/na404753/appmobile-tp/android/"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^7.5.0",
+    "@capacitor/core": "^8.1.0",
+    "nuxt": "^4.3.1",
+    "vue": "^3.5.28",
+    "vue-router": "^4.6.4"
+  }
+}
