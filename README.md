@@ -1,7 +1,7 @@
 # 📱 Projet App Mobile Hybride – IUT Info 2ème année ALT
 
 Projet réalisé dans le cadre du module **Développement d’application mobile hybride**
-Année universitaire **2025-2026 – Semestre 2**
+Année universitaire **2025-2026 – Semestre 4**
 
 ## 🧱 Stack technique
 
@@ -10,7 +10,8 @@ Année universitaire **2025-2026 – Semestre 2**
 * **Mobile** : Capacitor + Android Studio
 * **Base de données** : MySQL
 * **Conteneurs** : Docker + WSL
-
+  
+  
 ---
 
 ## ⚙️ Installation du projet

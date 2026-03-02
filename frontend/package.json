@@ -8,12 +8,12 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-
     "node": "rsync -av --delete ./node_modules/@capacitor/ /mnt/c/Users/na404753/appmobile-tp/node_modules/@capacitor/",
     "android": "nuxt build && npx cap sync android && rsync -av --delete ./android/ /mnt/c/Users/na404753/appmobile-tp/android/"
   },
   "dependencies": {
     "@capacitor/android": "^8.1.0",
+    "@capacitor/camera": "^8.0.1",
     "@capacitor/cli": "^7.5.0",
     "@capacitor/core": "^8.1.0",
     "nuxt": "^4.3.1",
