@@ -1,17 +1,15 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  css: ['~/assets/main.css'],
   ssr: false,
   compatibilityDate: '2025-07-15',
- 
+
   nitro: {
     preset: 'static'
   },
 
-
   app: {
-    baseURL: './'
+    baseURL: process.env.APP_ENV === 'mobile' ? './' : '/'  
   },
-
 
   runtimeConfig: {
     public: {
@@ -21,7 +19,6 @@ export default defineNuxtConfig({
       APPAPI_URL: process.env.APPAPI_URL
     }
   },
-
 
   devtools: { enabled: true }
 })

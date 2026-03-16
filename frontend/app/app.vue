@@ -1,7 +1,6 @@
 <script setup>
 const { token, fetchUser } = useAuth()
 
-
 onMounted(async () => {
   if (token.value) {
     await fetchUser()
@@ -11,7 +10,8 @@ onMounted(async () => {
 })
 </script>
 
-
 <template>
-  <NuxtPage />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

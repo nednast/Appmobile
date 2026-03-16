@@ -1,4 +1,4 @@
-/* Configuration de toute la page */
+Configuration de toute la page
 .login-wrapper {
   position: relative; /* Requis pour le positionnement absolu du fond */
   display: flex;
