@@ -34,6 +34,10 @@ const { user, logout } = useAuth()
         <span class="dash-icon">👤</span>
         <span class="dash-label">Mon compte</span>
       </NuxtLink>
+      <NuxtLink to="/ads" class="dash-card">
+      <span class="dash-icon">📍</span>
+      <span class="dash-label">Annonces</span>
+    </NuxtLink>
       <button class="dash-card dash-card--danger" @click="logout()">
         <span class="dash-icon">🚪</span>
         <span class="dash-label">Déconnexion</span>
