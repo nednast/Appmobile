@@ -184,6 +184,7 @@ const initials = computed(() => {
 .card__footer {
   padding: 0.6rem 1rem 0.9rem;
   display: flex;
+  flex-wrap: wrap;      
   gap: 0.4rem;
   align-items: center;
   border-top: 1px solid var(--border);
@@ -224,9 +225,9 @@ const initials = computed(() => {
 }
 
 .card__btn--share {
-  margin-left: auto;
   font-size: 1rem;
   padding: 0.3rem 0.6rem;
+  
 }
 .card__btn--share:hover {
   border-color: var(--gold);

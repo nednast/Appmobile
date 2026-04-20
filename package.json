@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@capacitor/cli": "^7.6.2",
+    "@capacitor/google-maps": "^8.0.1",
+    "@googlemaps/polyline-codec": "^1.0.28"
+  }
+}

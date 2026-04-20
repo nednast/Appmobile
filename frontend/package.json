@@ -17,7 +17,11 @@
     "@capacitor/cli": "^7.5.0",
     "@capacitor/core": "^8.1.0",
     "@capacitor/geolocation": "^8.2.0",
+    "@capacitor/google-maps": "^8.0.1",
     "@capacitor/share": "^8.0.1",
+    "@googlemaps/js-api-loader": "^2.0.2",
+    "@googlemaps/polyline-codec": "^1.0.28",
+    "@types/google.maps": "^3.64.0",
     "nuxt": "^4.3.1",
     "vue": "^3.5.28",
     "vue-router": "^4.6.4"

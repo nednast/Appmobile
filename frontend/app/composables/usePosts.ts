@@ -30,6 +30,7 @@ export const usePosts = () => {
   }
 
   const fetchUserPost = async (id: string | number) => {
+      console.log('token:', token.value) 
     console.log('Fetching user post with ID:', id)
     post.value = await $fetch(`${apiUrl}/api/user/posts/${id}`, {
       headers: authHeaders()
