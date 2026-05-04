@@ -13,8 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-         return Post::with('user')->latest()->get();
-
+        return Post::with('user')->withCount(['likes', 'comments'])->latest()->get();
     }
 
     /**
@@ -43,13 +42,14 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        return Post::with('user')->findOrFail($id);
+        return Post::with('user')->withCount(['likes', 'comments'])->findOrFail($id);
     }
 
     public function indexUser(Request $request)
     {
         $user = $request->user();
         return Post::with('user')
+            ->withCount(['likes', 'comments'])
             ->where('user_id', $user->id)
             ->latest()
             ->paginate(10);
@@ -62,7 +62,7 @@ class PostController extends Controller
     public function showUser(Request $request, string $id)
 {
     $user = $request->user();
-    $post = Post::with('user')->findOrFail($id);
+    $post = Post::with('user')->withCount(['likes', 'comments'])->findOrFail($id);
 
     if ($post->user_id !== $user->id) {
         return response()->json(['message' => 'Forbidden'], 403);

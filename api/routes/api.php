@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AdController;
+use App\Http\Controllers\Api\LikeController;
+use App\Http\Controllers\Api\CommentController;
 
 
 Route::get('/ping', function () {
@@ -14,7 +16,9 @@ Route::get('/ping', function () {
   ]);
 });
 
-Route::apiResource('posts', PostController::class);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::get('/posts/{id}/comments', [CommentController::class, 'index']);
 Route::get('/ads', [AdController::class, 'index']);
 Route::get('/ads/{id}', [AdController::class, 'show']);
 
@@ -34,6 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/posts', [PostController::class, 'store']);
     Route::post('/user/posts/{id}', [PostController::class, 'update']); 
     Route::delete('/user/posts/{id}', [PostController::class, 'destroy']);
+
+    Route::post('/posts/{id}/like', [LikeController::class, 'toggle']);
+    Route::post('/posts/{id}/comments', [CommentController::class, 'store']);
+    Route::delete('/posts/{id}/comments/{commentId}', [CommentController::class, 'destroy']);
 
     Route::get('/user/ads', [AdController::class, 'indexUser']);
     Route::post('/user/ads', [AdController::class, 'store']);

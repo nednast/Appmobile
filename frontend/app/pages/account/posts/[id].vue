@@ -25,11 +25,10 @@ const handleSave = async (formData) => {
   <div class="page-bg" />
   <div class="page-wrapper">
 
-    <NuxtLink to="/account/posts" class="back-link">Mes posts</NuxtLink>
-
-    <h1 style="margin-bottom: 1.25rem;">
-      {{ isNew ? 'Nouveau post' : 'Modifier le post' }}
-    </h1>
+    <div class="page-header">
+      <NuxtLink to="/account/posts" class="back-link">Mes posts</NuxtLink>
+      <h1>{{ isNew ? 'Nouveau post' : 'Modifier le post' }}</h1>
+    </div>
 
     <PostDetail
       :post="post"

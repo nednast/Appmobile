@@ -1,5 +1,5 @@
 <script setup>
-//definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth' })
 const { posts, fetchUserPosts, deletePost } = usePosts()
 const { public: { APP_ENV, WEBAPI_URL, APPAPI_URL } } = useRuntimeConfig()
 const apiUrl = APP_ENV === 'mobile' ? APPAPI_URL : WEBAPI_URL

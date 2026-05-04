@@ -8,9 +8,15 @@
 
     <div v-if="selectedAd && routeInfo" class="route-panel">
       <h3>{{ selectedAd.title }}</h3>
-      <p>📍 {{ routeInfo.distance }}</p>
-      <p>⏱ {{ routeInfo.duration }}</p>
-      <button @click="selectedAd = null">✕ Fermer</button>
+      <p class="route-panel__row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        {{ routeInfo.distance }}
+      </p>
+      <p class="route-panel__row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        {{ routeInfo.duration }}
+      </p>
+      <button @click="selectedAd = null">Fermer</button>
     </div>
 
     <div v-if="statusMsg" class="map-status">
@@ -35,7 +41,7 @@ const webMapRef = ref<HTMLElement | null>(null)
 const ads = ref<Ad[]>([])
 const selectedAd = ref<Ad | null>(null)
 const routeInfo = ref<{ distance: string; duration: string } | null>(null)
-const statusMsg = ref<string>('📡 Récupération de la position...')
+const statusMsg = ref<string>('Récupération de la position...')
 
 // ─── NATIVE (Android) ─────────────────────────────────────────
 let nativeMap: any
@@ -222,12 +228,12 @@ onMounted(async () => {
   await requestPosition()
 
   if (geoError.value) {
-    statusMsg.value = `⚠️ ${geoError.value}`
+    statusMsg.value = geoError.value ?? 'Position indisponible'
     return
   }
 
   if (!coords.value) {
-    statusMsg.value = "⚠️ Position indisponible"
+    statusMsg.value = 'Position indisponible'
     return
   }
 
@@ -241,7 +247,7 @@ onMounted(async () => {
     }
   } catch (e) {
     console.error('Erreur init carte:', e)
-    statusMsg.value = '⚠️ Erreur lors du chargement de la carte'
+    statusMsg.value = 'Erreur lors du chargement de la carte'
   }
 })
 
@@ -287,6 +293,21 @@ onUnmounted(() => {
   color: var(--text-muted);
   font-size: 0.875rem;
   margin: 0.25rem 0;
+}
+
+.route-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.route-panel__row svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--gold);
+  opacity: 0.8;
 }
 
 .route-panel button {

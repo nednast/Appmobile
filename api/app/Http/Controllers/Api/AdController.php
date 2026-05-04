@@ -20,8 +20,18 @@ class AdController extends Controller
         $lng = $request->query('lng');
 
         if ($lat !== null && $lng !== null) {
+            $lat = (float) $lat;
+            $lng = (float) $lng;
             $ads = Ad::with('user')
-                ->select('ads.*', DB::raw("DISTANCE(lat, lng, $lat, $lng) AS distance"))
+                ->select('ads.*', DB::raw("
+                    (6371 * acos(
+                        LEAST(1.0, GREATEST(-1.0,
+                            cos(radians($lat)) * cos(radians(lat))
+                            * cos(radians(lng) - radians($lng))
+                            + sin(radians($lat)) * sin(radians(lat))
+                        ))
+                    )) AS distance
+                "))
                 ->orderBy('distance', 'asc')
                 ->get();
         } else {

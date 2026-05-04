@@ -10,10 +10,9 @@ export const usePosts = () => {
     Authorization: `Bearer ${token.value}`
   })
 
-  // Public
+  // ── Public ────────────────────────────────────────────────────
   const fetchPosts = async () => {
     const res = await $fetch<any>(`${apiUrl}/api/posts`)
-    // Si paginé : res.data, sinon res directement
     posts.value = res.data ?? res
   }
 
@@ -21,7 +20,7 @@ export const usePosts = () => {
     post.value = await $fetch(`${apiUrl}/api/posts/${id}`)
   }
 
-  // Authentifié
+  // ── Authentifié ───────────────────────────────────────────────
   const fetchUserPosts = async () => {
     const res = await $fetch<any>(`${apiUrl}/api/user/posts`, {
       headers: authHeaders()
@@ -30,8 +29,6 @@ export const usePosts = () => {
   }
 
   const fetchUserPost = async (id: string | number) => {
-      console.log('token:', token.value) 
-    console.log('Fetching user post with ID:', id)
     post.value = await $fetch(`${apiUrl}/api/user/posts/${id}`, {
       headers: authHeaders()
     })
@@ -48,7 +45,6 @@ export const usePosts = () => {
   }
 
   const updatePost = async (id: string | number, data: FormData) => {
-    // Laravel ne supporte pas PUT avec FormData — on passe par POST + _method
     data.append('_method', 'PUT')
     const updated = await $fetch<any>(`${apiUrl}/api/user/posts/${id}`, {
       method: 'POST',
@@ -70,10 +66,40 @@ export const usePosts = () => {
     if (post.value?.id === id) post.value = null
   }
 
+  // ── Likes ─────────────────────────────────────────────────────
+  const toggleLike = async (postId: number): Promise<{ liked: boolean; likes_count: number }> => {
+    return await $fetch(`${apiUrl}/api/posts/${postId}/like`, {
+      method: 'POST',
+      headers: authHeaders()
+    })
+  }
+
+  // ── Comments ──────────────────────────────────────────────────
+  const fetchComments = async (postId: number): Promise<any[]> => {
+    return await $fetch(`${apiUrl}/api/posts/${postId}/comments`)
+  }
+
+  const addComment = async (postId: number, body: string): Promise<any> => {
+    return await $fetch(`${apiUrl}/api/posts/${postId}/comments`, {
+      method: 'POST',
+      headers: { ...authHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body })
+    })
+  }
+
+  const deleteComment = async (postId: number, commentId: number): Promise<void> => {
+    await $fetch(`${apiUrl}/api/posts/${postId}/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: authHeaders()
+    })
+  }
+
   return {
     posts, post,
     fetchPosts, fetchPost,
     fetchUserPosts, fetchUserPost,
-    createPost, updatePost, deletePost
+    createPost, updatePost, deletePost,
+    toggleLike,
+    fetchComments, addComment, deleteComment,
   }
 }

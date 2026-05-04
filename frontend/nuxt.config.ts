@@ -28,5 +28,13 @@ export default defineNuxtConfig({
     }
   },
 
+  vite: {
+    server: {
+      fs: {
+        allow: ['/app']
+      }
+    }
+  },
+
   devtools: { enabled: false }
 })

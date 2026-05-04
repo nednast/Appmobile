@@ -109,14 +109,16 @@ const takePicture = async () => {
       <!-- Web -->
       <div v-if="APP_ENV !== 'mobile'">
         <label class="btn btn-outline btn-sm avatar-upload-label">
-          📷 Changer l'avatar
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Changer l'avatar
           <input type="file" accept="image/*" @change="uploadAvatar" style="display:none;" />
         </label>
       </div>
       <!-- Mobile -->
       <div v-else>
         <button class="btn btn-outline btn-sm" @click="takePicture">
-          📷 Prendre une photo
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Prendre une photo
         </button>
       </div>
     </div>
@@ -200,5 +202,12 @@ const takePicture = async () => {
 .avatar-upload-label {
   cursor: pointer;
   display: inline-flex;
+}
+
+.btn-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-right: 0.3rem;
 }
 </style>
