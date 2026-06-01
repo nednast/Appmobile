@@ -303,7 +303,7 @@ WRITE_EXTERNAL_STORAGE
 
 ---
 
-## Simulation des notifications (correction)
+## Simulation des notifications
 
 Les notifications locales sont déclenchées automatiquement par des actions utilisateur. Pour les tester :
 
