@@ -1,5 +1,5 @@
 <template>
-  <div class="card-ad">
+  <NuxtLink :to="`/ads/${ad.id}`" class="card-ad card-ad--link">
     <img
       v-if="ad.image"
       :src="`${apiBase}/storage/${ad.image}`"
@@ -17,7 +17,7 @@
       </p>
       <p class="card-ad__description">{{ ad.description }}</p>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
@@ -32,6 +32,12 @@ const apiBase = config.public.APP_ENV === 'mobile'
 </script>
 
 <style scoped>
+.card-ad--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .card-ad {
   border: 1px solid var(--border);
   border-radius: var(--radius);

@@ -1,5 +1,4 @@
 <script setup>
-definePageMeta({ middleware: 'auth' })
 const route = useRoute()
 const { post, fetchUserPost, updatePost, createPost } = usePosts()
 const { public: { APP_ENV, WEBAPI_URL, APPAPI_URL } } = useRuntimeConfig()

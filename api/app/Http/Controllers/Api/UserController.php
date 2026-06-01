@@ -12,6 +12,26 @@ class UserController extends Controller
 {
 
 
+public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname'  => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|min:6|confirmed',
+        ]);
+
+        $validated['password'] = Hash::make($validated['password']);
+
+        $user = User::create($validated);
+        $token = $user->createToken('mobile-token')->plainTextToken;
+
+        return response()->json([
+            'user'  => $user,
+            'token' => $token
+        ], 201);
+    }
+
 public function login(Request $request)
     {
         $request->validate([

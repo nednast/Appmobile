@@ -77,6 +77,17 @@ const apiUrl = APP_ENV === 'mobile' ? APPAPI_URL : WEBAPI_URL
           <svg class="dash-row__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
         </NuxtLink>
 
+        <NuxtLink to="/account/ads" class="dash-row">
+          <div class="dash-row__icon dash-row__icon--gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div class="dash-row__body">
+            <p class="dash-row__title">Mes annonces</p>
+            <p class="dash-row__sub">Créer · Modifier</p>
+          </div>
+          <svg class="dash-row__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </NuxtLink>
+
         <NuxtLink to="/account" class="dash-row">
           <div class="dash-row__icon dash-row__icon--purple">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>

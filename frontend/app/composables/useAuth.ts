@@ -16,6 +16,29 @@ export const useAuth = () => {
   const apiUrl = APP_ENV === 'mobile' ? APPAPI_URL : WEBAPI_URL
 
 
+  const register = async (firstname: string, lastname: string, email: string, password: string, passwordConfirmation: string) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstname, lastname, email, password, password_confirmation: passwordConfirmation })
+      })
+
+      if (!res.ok) {
+        const err = await res.json()
+        return { success: false, errors: err.errors ?? {} }
+      }
+
+      const data = await res.json()
+      token.value = data.token
+      user.value = data.user
+      localStorage.setItem('token', data.token)
+      return { success: true, errors: {} }
+    } catch (e) {
+      return { success: false, errors: {} }
+    }
+  }
+
   const login = async (email: string, password: string) => {
     try {
       const res = await fetch(`${apiUrl}/api/login`, {
@@ -83,6 +106,7 @@ export const useAuth = () => {
   return {
     user,
     token,
+    register,
     login,
     logout,
     fetchUser

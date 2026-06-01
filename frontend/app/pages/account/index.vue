@@ -86,6 +86,18 @@ const takePicture = async () => {
       <h1>Mon compte</h1>
     </div>
 
+    <!-- Liens rapides -->
+    <div class="quick-links">
+      <NuxtLink to="/account/posts" class="quick-link">
+        <svg class="quick-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+        Mes posts
+      </NuxtLink>
+      <NuxtLink to="/account/ads" class="quick-link">
+        <svg class="quick-link__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Mes annonces
+      </NuxtLink>
+    </div>
+
     <!-- Avatar -->
     <div class="card">
       <div class="avatar-row">
@@ -173,6 +185,37 @@ const takePicture = async () => {
 </template>
 
 <style scoped>
+.quick-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.quick-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: border-color 0.2s, color 0.2s;
+}
+.quick-link:hover { border-color: var(--gold); color: var(--gold); }
+
+.quick-link__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--gold);
+  opacity: 0.8;
+}
+
 .avatar-row {
   display: flex;
   align-items: center;

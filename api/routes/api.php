@@ -22,6 +22,7 @@ Route::get('/posts/{id}/comments', [CommentController::class, 'index']);
 Route::get('/ads', [AdController::class, 'index']);
 Route::get('/ads/{id}', [AdController::class, 'show']);
 
+Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {

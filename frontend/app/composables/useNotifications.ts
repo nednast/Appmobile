@@ -16,7 +16,7 @@ export const useNotifications = () => {
         notifications: [{
           title,
           body,
-          id: Date.now(),
+          id: Date.now() % 2147483647,
           schedule: { at: new Date(Date.now() + 500) },
           smallIcon: 'ic_stat_icon_config_sample',
         }]

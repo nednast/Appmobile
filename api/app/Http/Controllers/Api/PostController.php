@@ -11,9 +11,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Post::with('user')->withCount(['likes', 'comments'])->latest()->get();
+        return Post::with('user')->withCount(['likes', 'comments'])->latest()->paginate(10);
     }
 
     /**

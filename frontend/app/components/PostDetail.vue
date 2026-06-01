@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Share } from '@capacitor/share'
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
+import { Capacitor } from '@capacitor/core'
 
 const props = defineProps({
   post: { type: Object, default: null },
@@ -26,7 +28,7 @@ const handleLike = async () => {
   const res = await toggleLike(props.post.id)
   liked.value = res.liked
   likesCount.value = res.likes_count
-  if (res.liked && props.post.user_id !== user.value?.id) {
+  if (res.liked) {
     await notifyLike(props.post.description)
   }
 }
@@ -66,6 +68,7 @@ onMounted(() => {
 // ── Edit form ─────────────────────────────────────────────────
 const form = reactive({ description: '', image: null })
 const previewUrl = ref(null)
+const isMobile = Capacitor.isNativePlatform()
 
 watch(() => props.post, (p) => {
   if (p) form.description = p.description
@@ -75,6 +78,20 @@ const onFileChange = (e) => {
   const file = e.target?.files?.[0] ?? null
   form.image = file
   if (file) previewUrl.value = URL.createObjectURL(file)
+}
+
+const takePhoto = async () => {
+  try {
+    const photo = await Camera.getPhoto({
+      quality: 80,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt
+    })
+    const blob = await (await fetch(photo.dataUrl!)).blob()
+    form.image = new File([blob], 'post.jpg', { type: 'image/jpeg' }) as any
+    previewUrl.value = photo.dataUrl
+  } catch {}
 }
 
 const handleSubmit = () => {
@@ -212,7 +229,20 @@ const initials = computed(() => {
 
     <div class="edit-form__field">
       <label class="edit-form__label">Image</label>
-      <label class="edit-form__file-label">
+
+      <!-- Mobile : Capacitor Camera -->
+      <button
+        v-if="isMobile"
+        type="button"
+        class="edit-form__camera-btn"
+        @click="takePhoto"
+      >
+        <svg class="edit-form__camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        {{ form.image ? 'Changer la photo' : 'Prendre / Choisir une photo' }}
+      </button>
+
+      <!-- Web : input file -->
+      <label v-else class="edit-form__file-label">
         <span>{{ form.image ? form.image.name : 'Choisir une image' }}</span>
         <input type="file" accept="image/*" class="edit-form__file-input" @change="onFileChange" />
       </label>
@@ -587,6 +617,29 @@ const initials = computed(() => {
   border-radius: 20px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.edit-form__camera-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  width: 100%;
+  transition: border-color 0.2s, color 0.2s;
+}
+.edit-form__camera-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+.edit-form__camera-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .edit-form__submit {

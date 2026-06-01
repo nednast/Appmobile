@@ -22,7 +22,7 @@ const handleLike = async () => {
   liked.value = res.liked
   likesCount.value = res.likes_count
   // Notification si le post appartient à un autre utilisateur
-  if (res.liked && props.post.user_id !== user.value?.id) {
+  if (res.liked) {
     await notifyLike(props.post.description)
   }
 }

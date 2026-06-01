@@ -1,6 +1,9 @@
 export const usePosts = () => {
   const posts = ref<any[]>([])
   const post = ref<any>(null)
+  const currentPage = ref(1)
+  const lastPage = ref(1)
+  const totalPosts = ref(0)
 
   const { public: { APP_ENV, WEBAPI_URL, APPAPI_URL } } = useRuntimeConfig()
   const apiUrl = APP_ENV === 'mobile' ? APPAPI_URL : WEBAPI_URL
@@ -11,9 +14,16 @@ export const usePosts = () => {
   })
 
   // ── Public ────────────────────────────────────────────────────
-  const fetchPosts = async () => {
-    const res = await $fetch<any>(`${apiUrl}/api/posts`)
-    posts.value = res.data ?? res
+  const fetchPosts = async (page = 1) => {
+    const res = await $fetch<any>(`${apiUrl}/api/posts?page=${page}`)
+    if (res.data) {
+      posts.value = res.data
+      currentPage.value = res.current_page ?? 1
+      lastPage.value = res.last_page ?? 1
+      totalPosts.value = res.total ?? 0
+    } else {
+      posts.value = res
+    }
   }
 
   const fetchPost = async (id: string | number) => {
@@ -96,6 +106,7 @@ export const usePosts = () => {
 
   return {
     posts, post,
+    currentPage, lastPage, totalPosts,
     fetchPosts, fetchPost,
     fetchUserPosts, fetchUserPost,
     createPost, updatePost, deletePost,

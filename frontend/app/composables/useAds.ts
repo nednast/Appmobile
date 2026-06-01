@@ -41,5 +41,53 @@ export function useAds() {
     return res.json()
   }
 
-  return { fetchAds, fetchAd }
+  function authHeaders(token: string) {
+    return { Authorization: `Bearer ${token}` }
+  }
+
+  async function fetchUserAds(token: string): Promise<{ data: Ad[]; current_page: number; last_page: number }> {
+    const res = await fetch(`${baseUrl}/api/user/ads`, { headers: authHeaders(token) })
+    if (!res.ok) throw new Error('Erreur chargement annonces')
+    return res.json()
+  }
+
+  async function fetchUserAd(id: number, token: string): Promise<Ad> {
+    const res = await fetch(`${baseUrl}/api/user/ads/${id}`, { headers: authHeaders(token) })
+    if (!res.ok) throw new Error('Annonce introuvable')
+    return res.json()
+  }
+
+  async function createAd(data: FormData, token: string): Promise<Ad> {
+    const res = await fetch(`${baseUrl}/api/user/ads`, {
+      method: 'POST',
+      headers: authHeaders(token),
+      body: data
+    })
+    if (!res.ok) {
+      const err = await res.json()
+      throw new Error(err.message ?? 'Erreur création')
+    }
+    return res.json()
+  }
+
+  async function updateAd(id: number, data: FormData, token: string): Promise<Ad> {
+    data.append('_method', 'PUT')
+    const res = await fetch(`${baseUrl}/api/user/ads/${id}`, {
+      method: 'POST',
+      headers: authHeaders(token),
+      body: data
+    })
+    if (!res.ok) throw new Error('Erreur modification')
+    return res.json()
+  }
+
+  async function deleteAd(id: number, token: string): Promise<void> {
+    const res = await fetch(`${baseUrl}/api/user/ads/${id}`, {
+      method: 'DELETE',
+      headers: authHeaders(token)
+    })
+    if (!res.ok) throw new Error('Erreur suppression')
+  }
+
+  return { fetchAds, fetchAd, fetchUserAds, fetchUserAd, createAd, updateAd, deleteAd }
 }
